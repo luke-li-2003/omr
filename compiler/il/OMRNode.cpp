@@ -4479,8 +4479,11 @@ OMR::Node::getEvaluationPriority(TR::CodeGenerator * cg)
       // Hack: our trees can have cycles (lmul/lumulh). To avoid infinite
       // recursion, initialize this node's priority to zero
       // This way we don't need to resort to visit counts
+      printf("setEvaluationPriority(0)\n");
       self()->setEvaluationPriority(0); // FIXME: remove this once we have
       // dealt with the issue of cycles in nodes
+      printf("setEvaluationPriority(cg->getEvaluationPriority(self())) %d\n",
+             cg->getEvaluationPriority(self()));
       return self()->setEvaluationPriority(cg->getEvaluationPriority(self()));
       }
    if ((uintptr_t)(_unionA._register) & 1) // evaluation priority
@@ -4499,7 +4502,7 @@ OMR::Node::setEvaluationPriority(int32_t p)
       }
    else // evaluated into a register
       {
-      TR_ASSERT(0, "setEvaluationPriority cannot be called after the node has already been evaluated");
+      TR_ASSERT(0, "setEvaluationPriority cannot be called after the node has already been evaluated %p", _unionA._register);
       }
    return p;
    }
