@@ -295,7 +295,7 @@ OMR::CodeGenerator::whichChildToEvaluate(TR::Node * node)
          }
       }
 
-   printf("setEvaluationPriority(nodePriority) %d\n", nodePriority);
+   printf("setEvaluationPriority(nodePriority) %d %p\n", nodePriority, node);
    node->setEvaluationPriority(nodePriority);
    return bestChild;
    }
