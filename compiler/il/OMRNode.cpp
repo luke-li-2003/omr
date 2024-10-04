@@ -4440,6 +4440,7 @@ OMR::Node::setRegister(TR::Register *reg)
 #endif
       }
 
+   printf("setRegister %p of node %p", _unionA._register, this);
    return (_unionA._register = reg);
    }
 
@@ -4503,7 +4504,7 @@ OMR::Node::setEvaluationPriority(int32_t p)
       }
    else // evaluated into a register
       {
-      printf("setEvaluationPriority Failed %d %p\n", p, _unionA._register);
+      printf("setEvaluationPriority Failed %d %p\n\n", p, _unionA._register);
       TR_ASSERT(0, "setEvaluationPriority cannot be called after the node has already been evaluated %p", _unionA._register);
       }
    return p;
