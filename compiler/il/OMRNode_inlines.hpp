@@ -24,6 +24,7 @@
 
 #include "il/Node.hpp"
 
+#include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include "compile/Compilation.hpp"
