@@ -4440,7 +4440,7 @@ OMR::Node::setRegister(TR::Register *reg)
 #endif
       }
 
-   printf("setRegister %p of node %p", _unionA._register, this);
+   printf("setRegister %p of node %p\n", reg, this);
    return (_unionA._register = reg);
    }
 
