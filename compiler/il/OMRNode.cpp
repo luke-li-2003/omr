@@ -6791,7 +6791,7 @@ OMR::Node::setVirtualGuardInfo(TR_VirtualGuard *guard, TR::Compilation *comp)
    if (_flags.testAny(inlineGuard))
       comp->removeVirtualGuard(_unionA._guard);
 
-   printf("setGuard %p of node %p", guard, this);
+   printf("setGuard %p of node %p\n", guard, this);
 
    _unionA._guard = guard;
    _flags.set(inlineGuard, guard != NULL);

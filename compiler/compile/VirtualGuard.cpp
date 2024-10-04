@@ -21,6 +21,7 @@
 
 #include "compile/VirtualGuard.hpp"
 
+#include <stdio.h>
 #include <stdint.h>
 #include "codegen/CodeGenerator.hpp"
 #include "env/FrontEnd.hpp"
@@ -73,6 +74,7 @@ TR_VirtualGuard::TR_VirtualGuard(TR_VirtualGuardTestType test, TR_VirtualGuardKi
 
    if(kind != TR_ArrayStoreCheckGuard)
       {
+      printf("Setting up virtual guard1 %p at node %p kind %d\n", this, guardNode, kind);
       guardNode->setVirtualGuardInfo(this, comp);
       guardNode->setInlinedSiteIndex(calleeIndex);
       guardNode->setByteCodeIndex(0);
@@ -113,8 +115,10 @@ TR_VirtualGuard::TR_VirtualGuard(TR_VirtualGuardTestType test, TR_VirtualGuardKi
       _bcInfo.setDoNotProfile(true);
       }
 
-   if (guardNode != NULL)
+   if (guardNode != NULL) {
+      printf("Setting up virtual guard2 %p at node %p kind %d\n", this, guardNode, kind);
       guardNode->setVirtualGuardInfo(this, comp);
+   }
    else
       comp->addVirtualGuard(this);
 
@@ -149,6 +153,7 @@ TR_VirtualGuard::TR_VirtualGuard(
    for (TR_InnerAssumption *inner = it.getFirst(); inner != NULL; inner = it.getNext())
       _innerAssumptions.add(inner);
 
+   printf("Setting up virtual guard3 %p at node %p kind %d\n", this, newGuardNode, _kind);
    newGuardNode->setVirtualGuardInfo(this, comp);
    }
 
