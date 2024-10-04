@@ -387,7 +387,7 @@ OMR::Node::setUseDefIndex(uint16_t udi)
       }
    else
       {
-      printf("setUDI %p of node %p", (void *) udi, this);
+      printf("setUDI %x of node %p", udi, this);
       return (_unionA._useDefIndex = udi);
       }
    }
