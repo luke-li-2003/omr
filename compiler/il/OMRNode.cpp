@@ -4466,6 +4466,7 @@ OMR::Node::unsetRegister()
       reg->getLiveRegisterInfo()->setNode(NULL);
       }
 
+   printf("unsetRegister %p %p of node %p\n", reg, _unionA._register, this);
    _unionA._register = NULL;
    return NULL;
    }
@@ -6791,7 +6792,7 @@ OMR::Node::setVirtualGuardInfo(TR_VirtualGuard *guard, TR::Compilation *comp)
    if (_flags.testAny(inlineGuard))
       comp->removeVirtualGuard(_unionA._guard);
 
-   printf("setGuard %p of node %p\n", guard, this);
+   printf("setGuard %p of node %p from %p\n", guard, this, _unionA._guard);
 
    _unionA._guard = guard;
    _flags.set(inlineGuard, guard != NULL);
