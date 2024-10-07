@@ -111,7 +111,7 @@ void TR_X86BinaryCommutativeAnalyser::genericAnalyser(TR::Node      *root,
    TR::Node *firstChild = NULL;
    TR::Node *secondChild = NULL;
    TR::Register *targetRegister = NULL;
-   printf("WCTE1\n");
+   printf("WCTE1 %p\n", root);
    if (_cg->whichChildToEvaluate(root) == 0)
       {
       firstChild  = root->getFirstChild();
@@ -253,7 +253,7 @@ void TR_X86BinaryCommutativeAnalyser::genericLongAnalyser(TR::Node       *root,
    {
    TR::Node *firstChild;
    TR::Node *secondChild;
-   printf("WCTE2\n");
+   printf("WCTE2 %p\n", root);
    if (_cg->whichChildToEvaluate(root) == 0)
       {
       firstChild  = root->getFirstChild();
@@ -714,7 +714,7 @@ void TR_X86BinaryCommutativeAnalyser::integerAddAnalyser(TR::Node      *root,
    TR::Node *firstChild = NULL;
    TR::Node *secondChild = NULL;
    TR::Register *targetRegister;
-   printf("WCTE3\n");
+   printf("WCTE3 %p\n", root);
   if (_cg->whichChildToEvaluate(root) == 0)
       {
       firstChild  = root->getFirstChild();
@@ -970,7 +970,7 @@ void TR_X86BinaryCommutativeAnalyser::longAddAnalyser(TR::Node *root)
    {
    TR::Node *firstChild = NULL;
    TR::Node *secondChild = NULL;
-   printf("WCTE4\n");
+   printf("WCTE4 %p\n", root);
    if (_cg->whichChildToEvaluate(root) == 0)
       {
       firstChild  = root->getFirstChild();
@@ -1395,7 +1395,7 @@ void TR_X86BinaryCommutativeAnalyser::longDualMultiplyAnalyser(TR::Node *root)
    TR::Node *secondChild = 0;
 
    // this may cause a problem, because both lmul and lumulh have 3 children.
-   printf("WCTE5\n");
+   printf("WCTE5 %p\n", root);
    if (_cg->whichChildToEvaluate(lumulhNode) == 0)
       {
       firstChild  = lumulhNode->getFirstChild();
@@ -1589,7 +1589,7 @@ void TR_X86BinaryCommutativeAnalyser::longMultiplyAnalyser(TR::Node *root)
    {
    TR::Node *firstChild  = 0;
    TR::Node *secondChild = 0;
-   printf("WCTE6\n");
+   printf("WCTE6%p\n", root);
    if (_cg->whichChildToEvaluate(root) == 0)
       {
       firstChild  = root->getFirstChild();

@@ -96,7 +96,7 @@ void TR_X86CompareAnalyser::integerCompareAnalyser(
       resetMem2();
       }
 
-   printf("WCTEa\n");
+   printf("WCTEa %p\n", root);
    if ((determineEvaluationOrder && (cg()->whichChildToEvaluate(root) == 0)) || !determineEvaluationOrder)
       {
       if (getEvalChild1())
@@ -321,7 +321,7 @@ void TR_X86CompareAnalyser::longOrderedCompareAndBranchAnalyser(TR::Node       *
    TR::Register            *delayedFirst  = NULL;
    TR::Register            *delayedSecond = NULL;
 
-   printf("WCTEb\n");
+   printf("WCTEb %p\n", root);
    if (cg()->whichChildToEvaluate(root) == 0)
       {
       if (getEvalChild1())
@@ -761,7 +761,7 @@ void TR_X86CompareAnalyser::longEqualityCompareAndBranchAnalyser(TR::Node       
 
    setInputs(firstChild, firstRegister, secondChild, secondRegister, true);
 
-   printf("WCTEc\n");
+   printf("WCTEc %p\n", root);
    if (cg()->whichChildToEvaluate(root) == 0)
       {
       if (getEvalChild1())
@@ -950,7 +950,7 @@ TR::Register *TR_X86CompareAnalyser::longEqualityBooleanAnalyser(TR::Node       
 
    setInputs(firstChild, firstRegister, secondChild, secondRegister, true);
 
-   printf("WCTEd\n");
+   printf("WCTEd %p\n", root);
    if (cg()->whichChildToEvaluate(root) == 0)
       {
       if (getEvalChild1())
@@ -1035,7 +1035,7 @@ TR::Register *TR_X86CompareAnalyser::longOrderedBooleanAnalyser(TR::Node       *
 
    setInputs(firstChild, firstRegister, secondChild, secondRegister, true);
 
-   printf("WCTEf\n");
+   printf("WCTEf %p\n", root);
    if (cg()->whichChildToEvaluate(root) == 0)
       {
       if (getEvalChild1())
@@ -1147,7 +1147,7 @@ TR::Register *TR_X86CompareAnalyser::longCMPAnalyser(TR::Node *root)
    TR::Compilation* comp = cg()->comp();
    setInputs(firstChild, firstRegister, secondChild, secondRegister, true);
 
-   printf("WCTEg\n");
+   printf("WCTEg %p\n", root);
    if (cg()->whichChildToEvaluate(root) == 0)
       {
       if (getEvalChild1())

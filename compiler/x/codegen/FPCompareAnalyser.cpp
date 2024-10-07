@@ -332,7 +332,7 @@ TR::Register *TR_IA32XMMCompareAnalyser::xmmCompareAnalyser(TR::Node       *root
 
    // Initial operand evaluation ordering.
    //
-   printf("WCTEh\n");
+   printf("WCTEh %p\n", root);
    if (preventOperandSwapping || (!mustSwapOperands && _cg->whichChildToEvaluate(root) == 0))
       {
       firstChild  = root->getFirstChild();
