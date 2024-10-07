@@ -126,6 +126,7 @@ OMR::Node::Node()
 
 OMR::Node::~Node()
    {
+   printf("Destroying node %p\n", this);
    _unionPropertyA = UnionPropertyA();
    _opCode.setOpCodeValue(TR::BadILOp);
    self()->freeExtensionIfExists();
