@@ -94,6 +94,7 @@ OMR::Node::operator new(size_t s, TR::NodePool& nodes)
 void
 OMR::Node::operator delete(void *node, TR::NodePool& nodes)
    {
+   printf("Deleting1 node %p\n", node);
    nodes.deallocate((TR::Node *) node);
    }
 
@@ -106,6 +107,7 @@ OMR::Node::operator new(size_t s, void *ptr) throw()
 void
 OMR::Node::operator delete(void *node, void *ptr) throw()
    {
+   printf("Deleting2 node %p\n", node);
    ::operator delete(node, ptr);
    }
 
