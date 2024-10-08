@@ -171,6 +171,7 @@ OMR::Node::Node(TR::Node *originatingByteCodeNode, TR::ILOpCodes op, uint16_t nu
    self()->setVisitCount(0);
    self()->setLocalIndex(0);
    self()->setKnownObjectIndex(TR::KnownObjectTable::UNKNOWN),
+   printf("Constructing node %p\n", this);
    memset( &(_unionA), 0, sizeof( _unionA ) );
    if (self()->getGlobalIndex() == MAX_NODE_COUNT)
       {
@@ -6790,10 +6791,11 @@ void
 OMR::Node::setVirtualGuardInfo(TR_VirtualGuard *guard, TR::Compilation *comp)
    {
    TR_ASSERT_FATAL_WITH_NODE(self(), self()->getOpCode().isIf(), "expected an if");
+   printf("setGuard0 %p of node %p from %p %p\n", guard, this, _unionA._guard, _unionA._register);
    if (_flags.testAny(inlineGuard))
       comp->removeVirtualGuard(_unionA._guard);
 
-   printf("setGuard %p of node %p from %p\n", guard, this, _unionA._guard);
+   printf("setGuard %p of node %p from %p %p\n", guard, this, _unionA._guard, _unionA._register);
 
    _unionA._guard = guard;
    _flags.set(inlineGuard, guard != NULL);
