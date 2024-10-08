@@ -167,11 +167,11 @@ OMR::Node::Node(TR::Node *originatingByteCodeNode, TR::ILOpCodes op, uint16_t nu
       self()->setChild(1, NULL);
       }
 
+   printf("Constructing node %p\n", this);
    self()->setReferenceCount(0);
    self()->setVisitCount(0);
    self()->setLocalIndex(0);
    self()->setKnownObjectIndex(TR::KnownObjectTable::UNKNOWN),
-   printf("Constructing node %p\n", this);
    memset( &(_unionA), 0, sizeof( _unionA ) );
    if (self()->getGlobalIndex() == MAX_NODE_COUNT)
       {
