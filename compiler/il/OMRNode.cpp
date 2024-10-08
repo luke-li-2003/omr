@@ -4499,7 +4499,7 @@ OMR::Node::setEvaluationPriority(int32_t p)
       }
    else // evaluated into a register
       {
-      if (!isTheVirtualCallNodeForAGuardedInlinedCall())
+      if (!isTheVirtualGuardForAGuardedInlinedCall())
          TR_ASSERT(0, "setEvaluationPriority cannot be called after the node has already been evaluated");
       }
    return p;
