@@ -102,7 +102,7 @@ enum TR_CompilationOptions
    TR_TraceAliases               = 0x00100000,
    // Available                  = 0x00200000,
    TR_TraceOptDetails            = 0x00400000,
-   TR_TraceAll                   = 0x006F0000,
+   TR_TraceAll                   = TR_TraceBC | TR_TraceTrees | TR_TraceCG | TR_TraceOptDetails, // intentionally omits TR_TraceAliases
 
    TR_CountOptTransformations    = 0x00800000, // Must be same option word as TR_TraceOptDetails to allow performTransformation macros to do getAnyOption on them
    TR_NoRecompile                = 0x01000000,
@@ -239,7 +239,7 @@ enum TR_CompilationOptions
    TR_ExperimentalClassLoadPhase          = 0x00000020 + 5,
    TR_DisableLookahead                    = 0x00000040 + 5,
    TR_TraceBFGeneration                   = 0x00000080 + 5,
-   // Available                           = 0x00000100 + 5,
+   TR_DisableSVMDuringStartup             = 0x00000100 + 5,
    TR_SuspendEarly                        = 0x00000200 + 5,
    TR_EnableEarlyCompilationDuringIdleCpu = 0x00000400 + 5,
    TR_DisableCallGraphInlining            = 0x00000800 + 5, // interpreter profiling
@@ -391,7 +391,7 @@ enum TR_CompilationOptions
    TR_DisclaimMemoryOnSwap                = 0x00000080 + 10,
    TR_FirstLevelProfiling                 = 0x00000100 + 10,
    TR_EnableCodeCacheDisclaiming          = 0x00000200 + 10,
-   // Available                           = 0x00000400 + 10,
+   TR_EnableMHRelocatableCompile          = 0x00000400 + 10,
    TR_EnableCodeCacheDisclaimingSupport   = 0x00000800 + 10,
    TR_RequestJITServerCachedMethods       = 0x00001000 + 10,
    TR_DisableNewMethodOverride            = 0x00002000 + 10,
