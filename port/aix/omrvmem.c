@@ -768,7 +768,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 
 	Trc_PRT_vmem_default_reserve_entry(address, byteAmount);
 
-	printf("LLK memory mode flag %d\n", (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode));
+	printf("LLK memory mode flag %lu\n", (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode));
 	if (0 != (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode)) {
 		/* Allocate code memory  */
 		result = portLibrary->mem_allocate_memory(portLibrary, byteAmount, OMR_GET_CALLSITE(), category->categoryCode);
@@ -1231,7 +1231,7 @@ getMemoryInRangeForDefaultPages(struct OMRPortLibrary *portLibrary, struct J9Por
 	 * 			- i.e. SLB(segment lookaside buffer), TLB(table lookaside buffer), and ERAT(effective address to real address table). In particular, each 256MB requires an SLB entry.
 	 *
 	 */
-	printf("LLK flags %d\n", OMR_ARE_ANY_BITS_SET(mode, OMRPORT_VMEM_MEMORY_MODE_EXECUTE));
+	printf("LLK flags %lu\n", OMR_ARE_ANY_BITS_SET(mode, OMRPORT_VMEM_MEMORY_MODE_EXECUTE));
 	if (__ENHANCED_AFFINITY() && (OMR_ARE_NO_BITS_SET(mode, OMRPORT_VMEM_MEMORY_MODE_EXECUTE | OMRPORT_VMEM_NO_AFFINITY))) {
 		printf("LLK using reserveLargePages\n");
 		/* If we have __ENHANCED_AFFINITY() and we're not looking for executable memory */
