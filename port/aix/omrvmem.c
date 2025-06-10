@@ -384,7 +384,7 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 
 	Trc_PRT_vmem_omrvmem_reserve_memory_Entry_replacement(params->startAddress, params->byteAmount, params->pageSize);
 
-	printf("LLK entering omrvmem_reserve_memory_ex\n");
+	printf("LLK aix entering omrvmem_reserve_memory_ex\n");
 
 #if defined(OMRVMEM_DEBUG)
 	printf("\n\tomrvmem_reserve_memory_ex byteAmount: %p, startAddress: %p, endAddress: %p, pageSize: 0x%zX, %s, %s, %s\n ",
@@ -397,6 +397,8 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 	Assert_PRT_true(params->startAddress <= params->endAddress);
 	ASSERT_VALUE_IS_PAGE_SIZE_ALIGNED(params->byteAmount, params->pageSize);
 
+	printf("LLK page size %ld\n", params->pageSize);
+
 	if (0 == params->pageSize) {
 		/* Invalid input */
 		update_vmemIdentifier(identifier, NULL, NULL, 0, 0, 0, 0, 0, NULL);
@@ -405,6 +407,7 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 		/* Handle default page size differently, don't use shmget */
 		uintptr_t alignment = OMR_MAX(params->pageSize, params->alignmentInBytes);
 		uintptr_t minimumGranule = OMR_MIN(params->pageSize, params->alignmentInBytes);
+		printf("LLK in default pagesize %ld %ld\n", alignment, minimumGranule);
 
 		/* Make sure that the alignment is a multiple of both requested alignment and page size (enforces that arguments are powers of two and, thus, their max is their lowest common multiple) */
 		if ((0 == minimumGranule) || (0 == (alignment % minimumGranule))) {
@@ -765,6 +768,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 
 	Trc_PRT_vmem_default_reserve_entry(address, byteAmount);
 
+	printf("LLK memory mode flag %d\n", (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode));
 	if (0 != (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode)) {
 		/* Allocate code memory  */
 		result = portLibrary->mem_allocate_memory(portLibrary, byteAmount, OMR_GET_CALLSITE(), category->categoryCode);
@@ -797,6 +801,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 			flags |= MAP_FIXED;
 		}
 
+		printf("LLK using mmap\n");
 		/* mmap and protect the memory */
 		result = mmap(address, (size_t)byteAmount, protMask, flags, fd, 0);
 #if defined(OMRVMEM_DEBUG)
@@ -1193,6 +1198,7 @@ allocAnywhere:
 static void *
 getMemoryInRangeForDefaultPages(struct OMRPortLibrary *portLibrary, struct J9PortVmemIdentifier *identifier, OMRMemCategory *category, uintptr_t byteAmount, void *startAddress, void *endAddress, uintptr_t alignmentInBytes, uintptr_t vmemOptions, uintptr_t mode)
 {
+	printf("LLK in getMemoryInRangeForDefaultPages\n");
 #if !defined(OMR_ENV_DATA64)
 	/**
 	 * Using shmat to allocate vmem on AIX32 reduces the number of segments which can be used for thread stacks.  Thus, explicitly use the mmap
@@ -1225,10 +1231,13 @@ getMemoryInRangeForDefaultPages(struct OMRPortLibrary *portLibrary, struct J9Por
 	 * 			- i.e. SLB(segment lookaside buffer), TLB(table lookaside buffer), and ERAT(effective address to real address table). In particular, each 256MB requires an SLB entry.
 	 *
 	 */
+	printf("LLK flags %d\n", OMR_ARE_ANY_BITS_SET(mode, OMRPORT_VMEM_MEMORY_MODE_EXECUTE));
 	if (__ENHANCED_AFFINITY() && (OMR_ARE_NO_BITS_SET(mode, OMRPORT_VMEM_MEMORY_MODE_EXECUTE | OMRPORT_VMEM_NO_AFFINITY))) {
+		printf("LLK using reserveLargePages\n");
 		/* If we have __ENHANCED_AFFINITY() and we're not looking for executable memory */
 		return reserveLargePages(portLibrary, identifier, category, byteAmount, startAddress, endAddress, PPG_vmem_pageSize[0], alignmentInBytes, vmemOptions, mode);
 	} else {
+		printf("LLK using mmap\n");
 		return getMemoryInRangeForDefaultPagesUsingMmap(portLibrary, identifier, category, byteAmount, startAddress, endAddress, alignmentInBytes, vmemOptions, mode);
 	}
 #endif /* !defined(OMR_ENV_DATA64) */
@@ -1273,7 +1282,9 @@ getMemoryInRangeForDefaultPagesUsingMmap(struct OMRPortLibrary *portLibrary, str
 			}
 		}
 
+		printf("LLK going to default_pageSize_reserve_memory 1\n");
 		memoryPointer = default_pageSize_reserve_memory(portLibrary, currentAddress, byteAmount, identifier, mode, PPG_vmem_pageSize[0], category);
+		printf("LLK exiting default_pageSize_reserve_memory 1\n");
 
 		/* stop if returned pointer is within range */
 		if ((NULL != memoryPointer) && (startAddress <= memoryPointer) && (endAddress >= memoryPointer)) {
@@ -1291,7 +1302,9 @@ getMemoryInRangeForDefaultPagesUsingMmap(struct OMRPortLibrary *portLibrary, str
 	/* if strict flag is not set and we did not get any memory, attempt to get memory at any address */
 	if (0 == (OMRPORT_VMEM_STRICT_ADDRESS & vmemOptions) && (NULL == memoryPointer)) {
 allocAnywhere:
+		printf("LLK going to default_pageSize_reserve_memory 2\n");
 		memoryPointer = default_pageSize_reserve_memory(portLibrary, NULL, byteAmount, identifier, mode, PPG_vmem_pageSize[0], category);
+		printf("LLK exiting default_pageSize_reserve_memory 2\n");
 	}
 
 	if (NULL == memoryPointer) {

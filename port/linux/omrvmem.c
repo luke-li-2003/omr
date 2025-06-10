@@ -801,6 +801,7 @@ omrvmem_reserve_memory(struct OMRPortLibrary *portLibrary, void *address, uintpt
 void *
 omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemIdentifier *identifier, struct J9PortVmemParams *params)
 {
+	printf("LLK linux entering omrvmem_reserve_memory_ex\n");
 	void *memoryPointer = NULL;
 	OMRMemCategory *category = omrmem_get_category(portLibrary, params->category);
 
