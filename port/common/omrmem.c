@@ -39,6 +39,7 @@
 void *
 omrmem_allocate_memory_basic(struct OMRPortLibrary *portLibrary, uintptr_t byteAmount)
 {
+	printf("LLK using common mem basic\n");
 	return (void *) malloc(byteAmount);
 }
 

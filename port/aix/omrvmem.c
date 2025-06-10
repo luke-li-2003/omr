@@ -384,13 +384,13 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 
 	Trc_PRT_vmem_omrvmem_reserve_memory_Entry_replacement(params->startAddress, params->byteAmount, params->pageSize);
 
-#if defined(OMRVMEM_DEBUG)
+	printf("LLK entering omrvmem_reserve_memory_ex\n");
+
 	printf("\n\tomrvmem_reserve_memory_ex byteAmount: %p, startAddress: %p, endAddress: %p, pageSize: 0x%zX, %s, %s, %s\n ",
 		   params->byteAmount, params->startAddress, params->endAddress, params->pageSize,
 		   (OMRPORT_VMEM_STRICT_PAGE_SIZE & params->options) ? "OMRPORT_VMEM_STRICT_PAGE_SIZE" : "\t",
 		   (OMRPORT_VMEM_STRICT_ADDRESS & params->options) ? "OMRPORT_VMEM_STRICT_ADDRESS" : "\t",
 		   (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & params->mode) ? "OMRPORT_VMEM_MEMORY_MODE_EXECUTE" : "\t");
-#endif
 
 	Assert_PRT_true(params->startAddress <= params->endAddress);
 	ASSERT_VALUE_IS_PAGE_SIZE_ALIGNED(params->byteAmount, params->pageSize);
@@ -465,10 +465,8 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 					 * Try again with default size pages using another allocation methods
 					 * Do it only if known page size allocation was requested - for compatibility with old code
 					 */
-#if defined(OMRVMEM_DEBUG)
 					printf("\t\t\t NULL == memoryPointer, reverting to default pages\n");
 					fflush(stdout);
-#endif
 					memoryPointer = attemptToReserveInDefaultPages(portLibrary, identifier, category, params->byteAmount, params->startAddress, params->endAddress,
 									PPG_vmem_pageSize[0], params->alignmentInBytes, params->options, params->mode);
 				}
@@ -484,9 +482,7 @@ omrvmem_reserve_memory_ex(struct OMRPortLibrary *portLibrary, struct J9PortVmemI
 		}
 	}
 
-#if defined(OMRVMEM_DEBUG)
 	printf("\t\t omrvmem_reserve_memory_ex returning address: %p\n", memoryPointer);
-#endif
 	Trc_PRT_vmem_omrvmem_reserve_memory_Exit_replacement(memoryPointer, params->startAddress);
 	return memoryPointer;
 }
