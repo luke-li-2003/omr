@@ -73,21 +73,21 @@ int omrdiscard_data(void *address, int numFrames);
 void *
 omrmem_allocate_memory_basic(struct OMRPortLibrary *portLibrary, uintptr_t byteAmount)
 {
-	printf("LLK using unix mem basic\n");
+	//printf("LLK using unix mem basic\n");
 #if (defined(S390) || defined(J9ZOS390)) && !defined(OMR_ENV_DATA64)
-	printf("LLK1 using unix mem basic\n");
+	//printf("LLK1 using unix mem basic\n");
 	return (void *)(((uintptr_t) malloc(byteAmount)) & 0x7FFFFFFF);
 #elif defined(J9ZOS390) && defined(OMR_GC_COMPRESSED_POINTERS)
-	printf("LLK2 using unix mem basic\n");
+	//printf("LLK2 using unix mem basic\n");
 	void *retval = NULL;
 	retval = malloc(byteAmount);
 	Assert_AddressAbove4GBBar((NULL == retval) || (0x100000000 <= ((uintptr_t)retval)));
 	return retval;
 #elif defined(OMRZTPF)
-	printf("LLK3 using unix mem basic\n");
+	//printf("LLK3 using unix mem basic\n");
     return malloc64(byteAmount);
 #else
-	printf("LLK4 using unix mem basic\n");
+	//printf("LLK4 using unix mem basic\n");
 	return malloc(byteAmount);
 #endif
 }
