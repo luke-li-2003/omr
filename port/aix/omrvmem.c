@@ -771,7 +771,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 	printf("LLK memory mode flag %lu\n", (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode));
 	/*
 	if (0 != (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode)) {
-		/* Allocate code memory  
+		// Allocate code memory  
 		result = portLibrary->mem_allocate_memory(portLibrary, byteAmount, OMR_GET_CALLSITE(), category->categoryCode);
 #if defined(OMRVMEM_DEBUG)
 		printf("\t\t mem_allocate_memory(byteAmount = 0x%zx) returned 0x%zx \n", byteAmount, result);
@@ -782,7 +782,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 			Trc_PRT_vmem_default_reserve_exit(result, address, byteAmount);
 			return NULL;
 		}
-		/* mem_allocate_memory will have called omrmem_category_increment_counters() - we don't need to do so 
+		// mem_allocate_memory will have called omrmem_category_increment_counters() - we don't need to do so 
 		update_vmemIdentifier(identifier, result, result, byteAmount, mode, pageSize, OMRPORT_VMEM_PAGE_FLAG_NOT_USED, OMRPORT_VMEM_RESERVE_USED_J9MEM_ALLOCATE_MEMORY, category);
 		Trc_PRT_vmem_default_reserve_exit(result, address, byteAmount);
 		return result;
