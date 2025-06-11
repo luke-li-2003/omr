@@ -769,6 +769,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 	Trc_PRT_vmem_default_reserve_entry(address, byteAmount);
 
 	printf("LLK memory mode flag %lu\n", (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode));
+	/*
 	if (0 != (OMRPORT_VMEM_MEMORY_MODE_EXECUTE & mode)) {
 		/* Allocate code memory  */
 		result = portLibrary->mem_allocate_memory(portLibrary, byteAmount, OMR_GET_CALLSITE(), category->categoryCode);
@@ -786,6 +787,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 		Trc_PRT_vmem_default_reserve_exit(result, address, byteAmount);
 		return result;
 	}
+	*/
 
 #if defined(MAP_ANONYMOUS)
 	flags |= MAP_ANONYMOUS;
