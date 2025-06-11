@@ -801,7 +801,7 @@ default_pageSize_reserve_memory(struct OMRPortLibrary *portLibrary, void *addres
 			flags |= MAP_FIXED;
 		}
 
-		printf("LLK using mmap\n");
+		printf("LLK using mmap fr\n");
 		/* mmap and protect the memory */
 		result = mmap(address, (size_t)byteAmount, protMask, flags, fd, 0);
 #if defined(OMRVMEM_DEBUG)
@@ -1237,7 +1237,7 @@ getMemoryInRangeForDefaultPages(struct OMRPortLibrary *portLibrary, struct J9Por
 		/* If we have __ENHANCED_AFFINITY() and we're not looking for executable memory */
 		return reserveLargePages(portLibrary, identifier, category, byteAmount, startAddress, endAddress, PPG_vmem_pageSize[0], alignmentInBytes, vmemOptions, mode);
 	} else {
-		printf("LLK using mmap\n");
+		printf("LLK using mmap maybe\n");
 		return getMemoryInRangeForDefaultPagesUsingMmap(portLibrary, identifier, category, byteAmount, startAddress, endAddress, alignmentInBytes, vmemOptions, mode);
 	}
 #endif /* !defined(OMR_ENV_DATA64) */

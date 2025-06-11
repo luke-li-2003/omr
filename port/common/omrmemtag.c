@@ -169,6 +169,7 @@ unwrapBlockAndCheckTags(struct OMRPortLibrary *portLibrary, void *memoryPointer)
 void *
 omrmem_allocate_memory(struct OMRPortLibrary *portLibrary, uintptr_t byteAmount, const char *callSite, uint32_t category)
 {
+	printf("LLK common allocate\n");
 	void *pointer = NULL;
 	uintptr_t allocationByteAmount;
 	allocate_memory_func_t allocateFunction = omrmem_allocate_memory_basic;
