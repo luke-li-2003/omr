@@ -1010,6 +1010,7 @@ omrvmem_find_valid_page_size(struct OMRPortLibrary *portLibrary, uintptr_t mode,
 			validPageFlags = PPG_vmem_pageFlags[0];
 		}
 	}
+	printf("LLK setting page size %ld %ld\n", validPageSize, *pageSize);
 
 _end:
 	/* Since page type is not used, ignore pageFlags when setting isSizeSupported. */
