@@ -505,13 +505,22 @@ attemptToReserveInLargePages(struct OMRPortLibrary *portLibrary,
 {
 	void *memoryPointer = NULL;
 
-	/* large pages so we have to use the shm API */
-	uintptr_t alignment = OMR_MAX(pageSize, alignmentInBytes);
-	uintptr_t minimumGranule = OMR_MIN(pageSize, alignmentInBytes);
+	/* only use large pages if the byte amount is larger than the page to prevent waste */
+	if (byteAmount >= pageSize) {
+		/* large pages so we have to use the shm API */
+		uintptr_t alignment = OMR_MAX(pageSize, alignmentInBytes);
+		uintptr_t minimumGranule = OMR_MIN(pageSize, alignmentInBytes);
 
-	/* Make sure that the alignment is a multiple of both requested alignment and page size (enforces that arguments are powers of two and, thus, their max is their lowest common multiple) */
-	if ((0 == minimumGranule) || (0 == (alignment % minimumGranule))) {
-		memoryPointer = reserveLargePages(portLibrary, identifier, category, byteAmount, startAddress, endAddress, pageSize, alignment, vmemOptions, mode);
+		/* Make sure that the alignment is a multiple of both requested alignment and page size (enforces that arguments are powers of two and, thus, their max is their lowest common multiple) */
+		if ((0 == minimumGranule) || (0 == (alignment % minimumGranule))) {
+			memoryPointer = reserveLargePages(portLibrary,
+				identifier, category, byteAmount, startAddress, endAddress,
+				pageSize, alignment, vmemOptions, mode);
+		}
+	} else {
+		memoryPointer = attemptToReserveInDefaultPages(portLibrary,
+			identifier, category, byteAmount, startAddress, endAddress,
+			pageSize, alignmentInBytes, vmemOptions, mode);
 	}
 
 	return memoryPointer;
