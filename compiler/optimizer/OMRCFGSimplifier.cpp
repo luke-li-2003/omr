@@ -136,6 +136,7 @@ bool OMR::CFGSimplifier::simplify()
 
 bool OMR::CFGSimplifier::simplifyIfStructure()
    {
+   traceMsg(comp(), "LkL1 %p\n", _block);
    if (trace())
       traceMsg(comp(), "Attempting if simpliciaton on block_%d\n", _block->getNumber());
    // There must be exactly two successors, and they must be real blocks
@@ -148,6 +149,8 @@ bool OMR::CFGSimplifier::simplifyIfStructure()
       return false;
    if (_next1->getEntry() == NULL || _next2->getEntry() == NULL)
       return false;
+
+   traceMsg(comp(), "LkL3 %p %p\n", _next1->getPredecessors(), _next2->getPredecessors());
 
    // The successors must have only this block as their predecessor, and must
    // have a common successor.
@@ -162,6 +165,7 @@ bool OMR::CFGSimplifier::simplifyIfStructure()
    if (!(_next2->getPredecessors().front()->getFrom() == _block && (_next2->getPredecessors().size() == 1)))
       needToDuplicateTree = true;
 
+   traceMsg(comp(), "LkL4\n");
    // This block must end in a compare-and-branch which can be converted to a
    // boolean compare, or a branch using the condition code.
    //
@@ -173,6 +177,7 @@ bool OMR::CFGSimplifier::simplifyIfStructure()
       //don't simplify nopable guards
       return false;
 
+   traceMsg(comp(), "LkL5\n");
    // ... and so one of the successors must be the fall-through successor. Make
    // _next1 be the fall-through successor.
    //
@@ -183,6 +188,7 @@ bool OMR::CFGSimplifier::simplifyIfStructure()
       _next2 = _next1;
       _next1 = b;
       }
+   traceMsg(comp(), "LkL6\n");
    return simplifyIfPatterns(needToDuplicateTree);
    }
 
