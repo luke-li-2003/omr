@@ -170,7 +170,9 @@ bool OMR::CFGSimplifier::simplifyIfStructure()
    // boolean compare, or a branch using the condition code.
    //
    TR::TreeTop *compareTreeTop = getLastRealTreetop(_block);
+   traceMsg(comp(), "LkL41 %p\n", compareTreeTop);
    TR::Node *compareNode       = compareTreeTop->getNode();
+   traceMsg(comp(), "LkL42 %p\n", compareNode);
    if (!compareNode->getOpCode().isIf())
       return false;
    if (compareNode->isNopableInlineGuard())
