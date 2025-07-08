@@ -109,8 +109,10 @@ bool OMR::CFGSimplifier::simplify()
    {
    // Can't simplify the entry or exit blocks
    //
+   traceMsg(comp(), "LkL check null for block_%d\n", _block->getNumber());
    if (_block->getEntry() == NULL)
       return false;
+   traceMsg(comp(), "LkL entry tt n%dn\n", _block->getEntry()->getNode()->getGlobalIndex());
 
    // Find the first two successors
    //
